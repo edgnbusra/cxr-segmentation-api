@@ -67,6 +67,22 @@ curl -X POST localhost:8000/analyze -F "file=@samples/chest_xray_1.jpg"
 
 **Kardiyotorasik oran (CTR)**, kalbin en geniş yerinin göğüs kafesinin en geniş yerine oranıdır. 0.50'nin üstü kardiyomegali (kalp büyümesi) açısından dikkat gerektirir.
 
+## Docker test sonuçları
+
+GitHub Codespaces üzerinde (2 CPU, 8 GB RAM, Linux) test edildi:
+
+| Test | Sonuç |
+|---|---|
+| İlk `docker build` | 227 sn (128 sn paket kurulumu, 23 sn model indirme) |
+| Kod değişikliği sonrası yeniden build | **14 sn** (katman önbelleği) |
+| Container açılışı | 12 sn, `docker ps` → `(healthy)` |
+| `/health`, `/predict` (mask, overlay, raw), `/analyze` | Hepsi 200. Çıktılar Windows'takiyle bayt bayt aynı |
+| Geçersiz dosya | 400 |
+| Container kullanıcısı | `appuser` (root değil) |
+| İnternetsiz çalışma (`docker run --network none`) | Çalışıyor, model imaja gömülü |
+| Inference süresi | ~240 ms (CPU) |
+| İmaj boyutu | 2.4 GB (torch CPU sürümü tek başına 773 MB) |
+
 ## Proje yapısı
 
 ```
@@ -89,6 +105,8 @@ requirements.txt
 | `'CXRModel' object has no attribute 'all_tied_weights_keys'` | Modelin kodu transformers 4.x için yazılmış | `transformers==4.57.6` |
 | `[Errno 10048]` port kullanımda | 8000 portunda başka bir program çalışıyordu | `--port 8001` |
 | Linux'ta dev boyutlu imaj riski | PyPI'deki varsayılan torch, CUDA'lı sürüm | Dockerfile'da torch CPU index'inden kuruluyor |
+| İnternetsiz container'da `Error fetching version info` uyarısı | albumentations açılışta sürüm kontrolü yapıyor | `ENV NO_ALBUMENTATIONS_UPDATE=1` |
+| Codespaces PORTS sekmesinde 8000 görünmüyor | Docker içindeki süreç otomatik algılanmıyor | `gh codespace ports forward 8000:8002 -c <ad>` → `localhost:8002/docs` |
 
 ## Kaynaklar ve lisanslar
 

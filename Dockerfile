@@ -33,8 +33,10 @@ COPY --chown=appuser:appuser app/ ./app/
 
 # 5) Modeli BUILD sırasında indirip imaja göm: container açılışta internete ihtiyaç duymaz
 RUN python -c "from app.model import SegmentationModel; SegmentationModel().load()"
-# Bundan sonra Hugging Face'e bağlanmaya çalışma, sadece önbellekteki modeli kullan
-ENV HF_HUB_OFFLINE=1
+# Bundan sonra Hugging Face'e bağlanmaya çalışma, sadece önbellekteki modeli kullan.
+# albumentations da açılışta "yeni sürüm var mı?" diye internete bağlanmasın.
+ENV HF_HUB_OFFLINE=1 \
+    NO_ALBUMENTATIONS_UPDATE=1
 
 EXPOSE 8000
 
