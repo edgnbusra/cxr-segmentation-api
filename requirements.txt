@@ -1,0 +1,25 @@
+# PyTorch'un CPU sürümü (GPU sürümünden ~10 kat küçük)
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.14.0
+
+# Hugging Face: modeli indirme ve yükleme
+# Modelin kodu (trust_remote_code) transformers 4.x için yazılmış; 5.x ile yüklenmiyor
+transformers==4.57.6
+huggingface_hub==0.36.2
+safetensors==0.8.0
+
+# Modelin kendi kodunun ihtiyaç duyduğu kütüphaneler (modeling.py içinde import ediliyor)
+timm==1.0.30
+albumentations==2.0.8
+# albumentations'ın alt bağımlılığı; 5.x'in Windows için hazır paketi (wheel) yok, derleme hatası veriyor
+stringzilla==4.6.3
+
+# Görüntü işleme (headless = ekran/GUI gerektirmeyen sürüm, sunucu ve Docker için uygun)
+opencv-python-headless==5.0.0.93
+numpy==2.4.6
+pillow==12.3.0
+
+# Web servisi
+fastapi==0.142.2
+uvicorn[standard]==0.54.0
+python-multipart==0.0.32

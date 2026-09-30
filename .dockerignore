@@ -1,0 +1,25 @@
+# Docker build'e gönderilmeyecek dosyalar (imajı küçük ve temiz tutar)
+
+# Windows sanal ortamı: Linux container'da çalışmaz, ~1 GB
+.venv/
+venv/
+
+# Python önbellekleri
+__pycache__/
+*.pyc
+
+# Test çıktıları ve örnekler (API çalışması için gerekmez)
+outputs/
+samples/
+assets/
+test_model.py
+
+# Git ve editör dosyaları
+.git/
+.gitignore
+.vscode/
+.idea/
+
+# Dokümantasyon
+README.md
+*.gif

@@ -1,0 +1,16 @@
+# Sanal ortam (her bilgisayarda requirements.txt'den yeniden kurulur)
+.venv/
+venv/
+
+# Python önbellekleri
+__pycache__/
+*.pyc
+
+# Yerel test çıktıları (demo GIF'i assets/ altında tutuluyor)
+outputs/
+
+# Editör ve işletim sistemi dosyaları
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
